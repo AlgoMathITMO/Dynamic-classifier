@@ -5,7 +5,7 @@ import pandas as pd
 from scipy.linalg import hankel
 
 #constants
-setname='D1'
+setname='D1' #D2
 n_cats=[63,60,51,29,13] #vused categories
 NCATS = len(n_cats) 
 L_win = 4 # time window for training
@@ -14,8 +14,11 @@ datadir='data/'
 cdf=pd.read_csv(datadir+'mcc2big.csv')
 cdf=cdf.groupby('0').apply(lambda x: np.array(x)[:,0])
 mcclist=np.concatenate(cdf[n_cats].values)
-
-df = pd.read_csv(datadir+'train_set.csv', usecols=['customer_id', 'transaction_date', 'mcc', 'amount'])
+print('Proceeding '+setname)
+if setname=='D1':
+    df = pd.read_csv(datadir+'train_set.csv', usecols=['customer_id', 'transaction_date', 'mcc', 'amount'])
+else:
+    df = pd.read_csv(datadir+'D2row_data.csv', usecols=['customer_id', 'transaction_date', 'mcc', 'amount'])
 df = df[df.mcc.isin(mcclist)]
 df['MCC87']=np.zeros(len(df)).astype(int)
 for c in n_cats:
@@ -27,8 +30,12 @@ table['COUNT']=df.groupby(['customer_id', 'MCC87', 'WEEK']).size().values
 labels, uniques = pd.factorize(table['customer_id'])
 table['id'] = labels
 table = table.pivot_table(index = ['id','WEEK'], columns = 'MCC87', values = 'COUNT', fill_value = 0).reset_index()
-N_weeks=table.WEEK.max() - table.WEEK.min()
+if setname=='D2': #If New Year included... For new data with COVID-19
+    w=table.WEEK.values
+    q=np.where(w<=40, w+12, w-40)
+    table.WEEK=q
 
+N_weeks=table.WEEK.max() - table.WEEK.min()
 print('Features aggregated. \nAdding missed...')
 b=np.arange(table.WEEK.min(), table.WEEK.max()+1)
 for user in table.id.unique():
@@ -71,4 +78,3 @@ for user in table.id.unique():
 ttab=ttab.astype(int)
 ttab.to_csv(datadir+setname+'indtab.csv', index=False)
 print('\n',datadir+setname+'indtab.csv saved. \n\tPreprocessing done.')
-
