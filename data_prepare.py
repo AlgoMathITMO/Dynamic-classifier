@@ -16,9 +16,9 @@ cdf=cdf.groupby('0').apply(lambda x: np.array(x)[:,0])
 mcclist=np.concatenate(cdf[n_cats].values)
 print('Proceeding '+setname)
 if setname=='D1':
-    df = pd.read_csv(datadir+'train_set.csv', usecols=['customer_id', 'transaction_date', 'mcc', 'amount'])
+    df = pd.read_csv(datadir+'D1raw_data.csv', usecols=['customer_id', 'transaction_date', 'mcc', 'amount'])
 else:
-    df = pd.read_csv(datadir+'D2row_data.csv', usecols=['customer_id', 'transaction_date', 'mcc', 'amount'])
+    df = pd.read_csv(datadir+'D2raw_data.csv', usecols=['customer_id', 'transaction_date', 'mcc', 'amount'])
 df = df[df.mcc.isin(mcclist)]
 df['MCC87']=np.zeros(len(df)).astype(int)
 for c in n_cats:
