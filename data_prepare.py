@@ -51,21 +51,11 @@ table=table.drop(table[bad].index)
 labels, uniques = pd.factorize(table['id'])
 table['id']=labels
 table=table.sort_values(by=['id', 'WEEK']).reset_index().drop('index',axis=1).astype(int)
-
-n_cats=[63]#,'60','51','29','13']
-table=table.drop(table[table.WEEK<7].index)
-table.WEEK=table.WEEK-table.WEEK.min()+1
-N_weeks=table.WEEK.max()-table.WEEK.min()+1
 NCATS = table.shape[1] - 2
-bad=np.in1d(table.id.values, np.where(table.groupby('id')[63].sum()<1))
-table=table.drop(table[bad].index)
-labels, uniques = pd.factorize(table['id'])
-table['id']=labels
-table=table.sort_values(by=['id', 'WEEK']).reset_index().drop('index',axis=1).astype(int)
 
 table.to_csv(datadir+setname+'table.csv', index=False)
-# indices for train/test subsets
 
+# indices for train/test subsets
 print('\n',datadir+setname+'table.csv saved. Counting idices...')
 ttab=pd.DataFrame(columns=['id', 'last_week']+list(np.arange(L_win+1)))
 for user in table.id.unique():
