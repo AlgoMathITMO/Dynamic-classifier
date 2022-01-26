@@ -244,8 +244,9 @@ BiBATCH_SIZE = 32
 OPTIM = Adam(learning_rate=lr)
 
 datadir='data/'
-table=pd.read_csv(datadir+'D1table.csv')
-ttab=pd.read_csv(datadir+'D1indtab.csv').astype(int)
+setname='D1'
+table=pd.read_csv(datadir+setname+'table.csv')
+ttab=pd.read_csv(datadir+setname+'indtab.csv').astype(int)
 
 week_test = 6 - delta
 week_train = 10 - delta
@@ -318,7 +319,7 @@ for step in range(20):
 acc_df=pd.DataFrame({'step':np.arange(len(accA))+1, 
                      'accA':accA, 'accB':accB, 'accTot':accTot,
                      'aucA':aucA, 'aucB':aucB, 'aucTot':aucTot,'CE':ce})
-acc_df.to_csv(datadir+'D1increm.csv', index=False)
+acc_df.to_csv(datadir+setname+'increm.csv', index=False)
 
 
 
