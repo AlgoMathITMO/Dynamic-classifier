@@ -8,5 +8,5 @@
 <LI>dinckass_noincr - shows how the system works with the incremental learning turned off and also collects of errors values, returns file D*base.csv with the metrics of accuracy and AUC ROC for each step;
 <LI>compare_base - makes plots of collected errors for incremental and not incremental models;
 <LI>dynclass_collect - collects the predictability data by five categories to the predictability profile, returns file D*total.csv;
-<LI>profile.ipynb - makes pictures out of collected predictability profiles.
+<LI>profiles.ipynb - makes pictures out of collected predictability profiles.
 </P>
