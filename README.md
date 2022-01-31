@@ -9,4 +9,6 @@
 <LI>compare_base - makes plots of collected errors for incremental and not incremental models;
 <LI>dynclass_collect - collects the predictability data by five categories to the predictability profile, returns file D*total.csv;
 <LI>profiles.ipynb - makes pictures out of collected predictability profiles.
+
+Download the Raiffeisen dataset: https://drive.google.com/file/d/1H0guFNUdggdhrnFHUiWHTgb6y-QxA4tN/view?usp=sharing
 </P>
